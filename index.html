@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Be My Valentine 💜</title>
   <style>
     * { box-sizing: border-box; }
@@ -48,6 +48,7 @@
       border: none;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
     }
 
     button:hover {
@@ -55,15 +56,8 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
 
-    .yes {
-      background: #9333ea;
-      color: white;
-    }
-
-    .no {
-      background: #e5e7eb;
-      color: #374151;
-    }
+    .yes { background: #9333ea; color: white; }
+    .no { background: #e5e7eb; color: #374151; }
 
     .message {
       margin-top: 1.5rem;
@@ -72,7 +66,6 @@
       display: none;
     }
 
-    /* Flower explosion */
     .flower {
       position: absolute;
       top: 50%;
@@ -83,14 +76,8 @@
     }
 
     @keyframes explode {
-      0% {
-        transform: translate(-50%, -50%) scale(0.2);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(var(--x), var(--y)) scale(1.4) rotate(720deg);
-        opacity: 0;
-      }
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity:1; }
+      100% { transform: translate(var(--x), var(--y)) scale(1.4) rotate(720deg); opacity:0; }
     }
 
     .overlay {
@@ -102,9 +89,7 @@
       z-index: 1;
     }
 
-    .overlay.active {
-      opacity: 1;
-    }
+    .overlay.active { opacity: 1; }
   </style>
 </head>
 <body>
@@ -122,21 +107,19 @@
   </div>
 
   <script>
-    const music = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_4fbb9c9d66.mp3?filename=romantic-ambient-116199.mp3');
+    const music = new Audio('https://cdn.pixabay.com/audio/2022/03/15/romantic-ambient-116199.mp3');
     music.loop = true;
 
     function sayYes() {
       const overlay = document.getElementById('overlay');
       const message = document.getElementById('message');
-
       overlay.classList.add('active');
       message.style.display = 'block';
       message.textContent = 'Yay!!! You just made my heart very happy 💜🌸';
-
       music.play();
 
-      // WhatsApp notification (replace with YOUR number)
-      const phoneNumber = '233599128118'; // ← put your number here (country code + number)
+      // WhatsApp notification
+      const phoneNumber = '233XXXXXXXXX'; // replace with your number
       const text = encodeURIComponent('SHE SAID YES 💜🌸 Will you be my Valentine, Pebble 😍');
       window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
 
@@ -152,11 +135,9 @@
         flower.style.setProperty('--x', x);
         flower.style.setProperty('--y', y);
         flower.style.color = '#a855f7';
-
         document.body.appendChild(flower);
         setTimeout(() => flower.remove(), 2600);
       }
-    }
     }
 
     function moveNo() {
