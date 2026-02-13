@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine 💜</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #f6e7ff, #e9c6ff);
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 3rem 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      z-index: 2;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2rem;
+      color: #6b21a8;
+    }
+
+    .buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    button {
+      font-size: 1.1rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .yes {
+      background: #9333ea;
+      color: white;
+    }
+
+    .no {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .message {
+      margin-top: 1.5rem;
+      font-size: 1.3rem;
+      color: #7e22ce;
+      display: none;
+    }
+
+    /* Flower explosion */
+    .flower {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 24px;
+      pointer-events: none;
+      animation: explode 2.5s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(1.4) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(168,85,247,0.35), rgba(88,28,135,0.85));
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 1;
+    }
+
+    .overlay.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="card">
+    <h1>Will you be my Valentine, Pebble? 💜</h1>
+
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">Yes 💖</button>
+      <button class="no" id="noBtn" onmouseover="moveNo()">No 🙈</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    const music = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_4fbb9c9d66.mp3?filename=romantic-ambient-116199.mp3');
+    music.loop = true;
+
+    function sayYes() {
+      const overlay = document.getElementById('overlay');
+      const message = document.getElementById('message');
+
+      overlay.classList.add('active');
+      message.style.display = 'block';
+      message.textContent = 'Yay!!! You just made my heart very happy 💜🌸';
+
+      music.play();
+
+      // WhatsApp notification (replace with YOUR number)
+      const phoneNumber = '233599128118'; // ← put your number here (country code + number)
+      const text = encodeURIComponent('SHE SAID YES 💜🌸 Will you be my Valentine, Pebble 😍');
+      window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
+
+      const flowers = ['🌸','💜','🌺','🌷','✨'];
+      for (let i = 0; i < 120; i++) {
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+
+        const x = (Math.random() - 0.5) * window.innerWidth + 'px';
+        const y = (Math.random() - 0.5) * window.innerHeight + 'px';
+
+        flower.style.setProperty('--x', x);
+        flower.style.setProperty('--y', y);
+        flower.style.color = '#a855f7';
+
+        document.body.appendChild(flower);
+        setTimeout(() => flower.remove(), 2600);
+      }
+    }
+    }
+
+    function moveNo() {
+      const btn = document.getElementById('noBtn');
+      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+      btn.style.position = 'fixed';
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+    }
+  </script>
+</body>
+</html>
