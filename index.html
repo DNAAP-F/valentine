@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,35 +67,20 @@
       display: none;
     }
 
-    .flower {
+    .particle {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      font-size: 24px;
       pointer-events: none;
-      animation: explode 2.5s ease-out forwards;
+      font-size: 24px;
+      animation: fly 3s linear forwards;
     }
 
-    @keyframes explode {
-      0% { transform: translate(-50%, -50%) scale(0.2); opacity:1; }
-      100% { transform: translate(var(--x), var(--y)) scale(1.4) rotate(720deg); opacity:0; }
+    @keyframes fly {
+      0% { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(1.2) rotate(720deg); }
     }
-
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(168,85,247,0.35), rgba(88,28,135,0.85));
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 1;
-    }
-
-    .overlay.active { opacity: 1; }
   </style>
 </head>
 <body>
-  <div class="overlay" id="overlay"></div>
-
   <div class="card">
     <h1>Will you be my Valentine, Pebble? 💜</h1>
 
@@ -111,32 +97,33 @@
     music.loop = true;
 
     function sayYes() {
-      const overlay = document.getElementById('overlay');
       const message = document.getElementById('message');
-      overlay.classList.add('active');
       message.style.display = 'block';
       message.textContent = 'Yay!!! You just made my heart very happy 💜🌸';
-      music.play();
+
+      // Play music
+      music.play().catch(err => console.log('Audio play blocked', err));
 
       // WhatsApp notification
-      const phoneNumber = '233XXXXXXXXX'; // replace with your number
+      const phoneNumber = '233599128118'; // replace with your number
       const text = encodeURIComponent('SHE SAID YES 💜🌸 Will you be my Valentine, Pebble 😍');
       window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
 
-      const flowers = ['🌸','💜','🌺','🌷','✨'];
-      for (let i = 0; i < 120; i++) {
-        const flower = document.createElement('div');
-        flower.className = 'flower';
-        flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+      // Particle explosion (flowers + hearts + confetti)
+      const particlesArray = ['💜','💖','🌸','✨','❤️','🌺','🌷'];
+      for (let i = 0; i < 150; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = particlesArray[Math.floor(Math.random() * particlesArray.length)];
 
         const x = (Math.random() - 0.5) * window.innerWidth + 'px';
         const y = (Math.random() - 0.5) * window.innerHeight + 'px';
 
-        flower.style.setProperty('--x', x);
-        flower.style.setProperty('--y', y);
-        flower.style.color = '#a855f7';
-        document.body.appendChild(flower);
-        setTimeout(() => flower.remove(), 2600);
+        particle.style.setProperty('--x', x);
+        particle.style.setProperty('--y', y);
+
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 3000);
       }
     }
 
